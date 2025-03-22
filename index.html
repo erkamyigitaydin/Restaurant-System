@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restoran Yönetim Sistemi</title>
+  <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Yan Menü -->
+      <div class="col-md-2 bg-dark text-light sidebar">
+        <div class="logo text-center py-4">
+          <h3>Köri Soslu Restoran</h3>
+        </div>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link text-light active" href="#" data-page="dashboard">Ana Sayfa</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#" data-page="tables">Masalar</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#" data-page="menu">Menü</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#" data-page="reservations">Rezervasyonlar</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#" data-page="orders">Siparişler</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="#" data-page="billing">Hesap</a>
+          </li>
+        </ul>
+      </div>
+      
+      <!-- Ana İçerik -->
+      <div class="col-md-10 main-content">
+        <!-- Dashboard -->
+        <div id="dashboard-page" class="page-container">
+          <h2 class="mb-4">Ana Sayfa</h2>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="mb-0">Günlük Özet</h5>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <div class="border rounded p-3 text-center">
+                        <h6>Aktif Masalar</h6>
+                        <h3 id="active-tables-count">0</h3>
+                      </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <div class="border rounded p-3 text-center">
+                        <h6>Bekleyen Siparişler</h6>
+                        <h3 id="pending-orders-count">0</h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Masalar -->
+        <div id="tables-page" class="page-container d-none">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Masalar</h2>
+          </div>
+          <div class="row table-container">
+            <!-- Masalar buraya dinamik olarak eklenecek -->
+          </div>
+        </div>
+        
+        <!-- Menü -->
+        <div id="menu-page" class="page-container d-none">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Menü</h2>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table" id="menu-items-table">
+                  <thead>
+                    <tr>
+                      <th>Ürün Adı</th>
+                      <th>Kategori</th>
+                      <th>Fiyat</th>
+                      <th>Stok</th>
+                      <th>Durum</th>
+                      <th>İşlemler</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Menü öğeleri buraya dinamik olarak eklenecek -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Rezervasyonlar -->
+        <div id="reservations-page" class="page-container d-none">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Rezervasyonlar</h2>
+          </div>
+          <div class="row">
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table" id="reservations-list">
+                      <thead>
+                        <tr>
+                          <th>Müşteri</th>
+                          <th>Telefon</th>
+                          <th>Masa</th>
+                          <th>Tarih</th>
+                          <th>Saat</th>
+                          <th>Kişi Sayısı</th>
+                          <th>Durum</th>
+                          <th>İşlemler</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- Rezervasyonlar buraya dinamik olarak eklenecek -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="mb-0">Yeni Rezervasyon</h5>
+                </div>
+                <div class="card-body">
+                  <form id="reservation-form">
+                    <div class="mb-3">
+                      <label for="customer-name" class="form-label">Müşteri Adı</label>
+                      <input type="text" class="form-control" id="customer-name" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="customer-phone" class="form-label">Telefon</label>
+                      <input type="tel" class="form-control" id="customer-phone">
+                    </div>
+                    <div class="mb-3">
+                      <label for="reservation-table" class="form-label">Masa</label>
+                      <select class="form-select" id="reservation-table" required>
+                        <!-- Masalar buraya dinamik olarak eklenecek -->
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="reservation-date" class="form-label">Tarih</label>
+                      <input type="date" class="form-control" id="reservation-date" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="reservation-time" class="form-label">Saat</label>
+                      <input type="time" class="form-control" id="reservation-time" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="guest-count" class="form-label">Kişi Sayısı</label>
+                      <input type="number" class="form-control" id="guest-count" min="1" value="2" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="reservation-notes" class="form-label">Notlar</label>
+                      <textarea class="form-control" id="reservation-notes" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Rezervasyon Ekle</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Siparişler -->
+        <div id="orders-page" class="page-container d-none">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Siparişler</h2>
+          </div>
+          <div class="row">
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table" id="orders-list">
+                      <thead>
+                        <tr>
+                          <th>Masa</th>
+                          <th>Saat</th>
+                          <th>Ürünler</th>
+                          <th>Toplam</th>
+                          <th>Durum</th>
+                          <th>İşlemler</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- Siparişler buraya dinamik olarak eklenecek -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="mb-0">Yeni Sipariş</h5>
+                </div>
+                <div class="card-body">
+                  <form id="order-form">
+                    <div class="mb-3">
+                      <label for="order-table" class="form-label">Masa</label>
+                      <select class="form-select" id="order-table" required>
+                        <!-- Masalar buraya dinamik olarak eklenecek -->
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="menu-item-select" class="form-label">Ürün</label>
+                      <select class="form-select" id="menu-item-select" required>
+                        <!-- Menü öğeleri buraya dinamik olarak eklenecek -->
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="item-quantity" class="form-label">Adet</label>
+                      <input type="number" class="form-control" id="item-quantity" min="1" value="1" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="order-notes" class="form-label">Notlar</label>
+                      <textarea class="form-control" id="order-notes" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sipariş Ekle</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Hesap -->
+        <div id="billing-page" class="page-container d-none">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Hesap</h2>
+          </div>
+          <div class="row">
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table" id="bills-list">
+                      <thead>
+                        <tr>
+                          <th>Masa</th>
+                          <th>Tarih</th>
+                          <th>Ürünler</th>
+                          <th>Ara Toplam</th>
+                          <th>KDV</th>
+                          <th>Toplam</th>
+                          <th>Ödeme</th>
+                          <th>İşlemler</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- Faturalar buraya dinamik olarak eklenecek -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="mb-0">Hesap Al</h5>
+                </div>
+                <div class="card-body">
+                  <form id="bill-form">
+                    <div class="mb-3">
+                      <label for="bill-table" class="form-label">Masa</label>
+                      <select class="form-select" id="bill-table" required>
+                        <!-- Masalar buraya dinamik olarak eklenecek -->
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="payment-method" class="form-label">Ödeme Yöntemi</label>
+                      <select class="form-select" id="payment-method" required>
+                        <option value="cash">Nakit</option>
+                        <option value="credit-card">Kredi Kartı</option>
+                        <option value="debit-card">Banka Kartı</option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label for="bill-notes" class="form-label">Notlar</label>
+                      <textarea class="form-control" id="bill-notes" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Hesap Al</button>
+                  </form>
+                  
+                  <!-- Hesap Özeti -->
+                  <div id="bill-summary" class="mt-3">
+                    <!-- Hesap detayları buraya dinamik olarak eklenecek -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modaller -->
+  <!-- Masa Modal -->
+  <div class="modal fade" id="table-modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="table-modal-title">Yeni Masa Ekle</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="table-form" data-mode="add">
+            <div class="mb-3">
+              <label for="table-name" class="form-label">Masa Adı</label>
+              <input type="text" class="form-control" id="table-name" required>
+            </div>
+            <div class="mb-3">
+              <label for="table-capacity" class="form-label">Kapasite</label>
+              <input type="number" class="form-control" id="table-capacity" min="1" value="4" required>
+            </div>
+            <div class="mb-3">
+              <label for="table-location" class="form-label">Konum</label>
+              <input type="text" class="form-control" id="table-location" placeholder="İç Mekan, Teras vb.">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+          <button type="button" class="btn btn-primary" onclick="saveTable()">Kaydet</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menü Öğesi Modal -->
+  <div class="modal fade" id="menu-item-modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="menu-item-modal-title">Yeni Menü Öğesi Ekle</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="menu-item-form" data-mode="add">
+            <div class="mb-3">
+              <label for="item-name" class="form-label">Ürün Adı</label>
+              <input type="text" class="form-control" id="item-name" required>
+            </div>
+            <div class="mb-3">
+              <label for="item-category" class="form-label">Kategori</label>
+              <select class="form-select" id="item-category" required>
+                <option value="appetizers">Başlangıçlar</option>
+                <option value="main-courses">Ana Yemekler</option>
+                <option value="desserts">Tatlılar</option>
+                <option value="drinks">İçecekler</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="item-price" class="form-label">Fiyat (₺)</label>
+              <input type="number" class="form-control" id="item-price" min="0" step="0.01" required>
+            </div>
+            <div class="mb-3">
+              <label for="item-stock" class="form-label">Stok</label>
+              <input type="number" class="form-control" id="item-stock" min="0" value="0">
+            </div>
+            <div class="mb-3">
+              <label for="item-description" class="form-label">Açıklama</label>
+              <textarea class="form-control" id="item-description" rows="2"></textarea>
+            </div>
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" id="item-active" checked>
+              <label class="form-check-label" for="item-active">Aktif</label>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+          <button type="button" class="btn btn-primary" onclick="saveMenuItem()">Kaydet</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fatura Detay Modal -->
+  <div class="modal fade" id="bill-details-modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Fatura Detayları</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Fatura detayları buraya dinamik olarak eklenecek -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+          <button type="button" class="btn btn-primary" onclick="printActiveModal()">Yazdır</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rezervasyon Modal -->
+  <div class="modal fade" id="reservation-modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="reservation-modal-title">Rezervasyon Detayları</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="reservation-details">
+            <!-- Rezervasyon detayları buraya dinamik olarak eklenecek -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+          <button type="button" class="btn btn-danger" id="delete-reservation-btn">Rezervasyonu İptal Et</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Ana JavaScript -->
+  <script src="./assets/js/main.js"></script>
+</body>
+</html> 

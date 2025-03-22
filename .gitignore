@@ -1,0 +1,47 @@
+# Bağımlılıklar
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Derleme klasörleri
+/dist
+/build
+/.nyc_output
+/coverage
+
+# Electron derlemesi
+/out
+
+# Ortam değişkenleri
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE ve düzenleyici dosyaları
+/.idea
+/.vscode
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# İşletim sistemi dosyaları
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# MongoDB yerel veritabanı dosyaları
+/data/db
+
+# Electron-store verileri
+config.json
+
+# Log dosyaları
+logs
+*.log 

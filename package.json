@@ -1,0 +1,21 @@
+{
+  "name": "restaurant-management-system",
+  "version": "1.0.0",
+  "description": "Restoran Yönetim Sistemi - Çevrimiçi masa rezervasyonu, menü yönetimi ve fatura",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^28.1.0"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.2",
+    "electron-store": "^8.1.0",
+    "mongodb": "^6.15.0",
+    "mongoose": "^8.12.1"
+  }
+}
